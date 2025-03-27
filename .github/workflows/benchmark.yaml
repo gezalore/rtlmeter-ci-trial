@@ -1,0 +1,86 @@
+
+
+name: Benchmark
+
+# Do not run this workflow on pull request since this workflow has permission to modify contents.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 * * * *"  # 40 minutes past every hour
+
+permissions:
+  # deployments permission to deploy GitHub pages website
+  deployments: write
+  # contents permission to update benchmark contents in gh-pages branch
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: "Checkout self"
+        uses: actions/checkout@v4
+        with:
+          path: "self"
+      - name: "Checkout Verilator"
+        uses: actions/checkout@v4
+        with:
+          repository: "verilator/verilator"
+          path: "verilator/repo"
+      - name: "Checkout RTLMeter"
+        uses: actions/checkout@v4
+        with:
+          repository: "gezalore/designbench"
+          path: "rtlmeter"
+
+      - name: "Setup Ccache for Verilator Build"
+        uses: actions/cache@v4
+        with:
+          path: "verilator/ccache"
+          key: benchmark-verialtor-build-ccache
+
+      - name: "Install Verialtor dependencies"
+        working-directory: "verilator/repo"
+        env:
+          CI_BUILD_STAGE_NAME: build
+          CI_OS_NAME: linux
+          CI_RUNS_ON: ubuntu-24.04
+        run: ./ci/ci-install.bash
+      - name: "Build Verilator"
+        working-directory: "verilator/repo"
+        env:
+          CCACHE_DIR: ${{ github.workspace }}/verilator/ccache
+        run:  |
+          ccache -s
+          ccache -z
+          autoconf
+          ./configure --prefix=${{ github.workspace }}/verilator/install CXX=clang++
+          make -j4
+          make install
+          ccache -s
+      - name: "Setup RTLMeter venv"
+        working-directory: "rtlmeter"
+        run: make venv
+      - name: "Run benchmarks"
+        working-directory: "rtlmeter"
+        run: |
+          export PATH="${{ github.workspace }}/verilator/install/bin:$PATH"
+          ./rtlmeter run --cases "VeeR-*:default:cmark"
+      - name: "Report"
+        working-directory: "rtlmeter"
+        run: |
+          ./rtlmeter collate > data.json
+          ./rtlmeter report data.json
+          python3 ../self/convert.py data.json > ../output.json
+          cat ../output.json
+
+      - name: Store result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: "Eval results"
+          tool: "customSmallerIsBetter"
+          output-file-path: output.json
+          # Access token to deploy GitHub Pages branch
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Push and deploy GitHub pages branch automatically
+          auto-push: true
