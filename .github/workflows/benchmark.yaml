@@ -57,7 +57,7 @@ jobs:
         run:  |
           ccache -sz
           autoconf
-          ./configure --prefix=${{ github.workspace }}/verilator/install CXX=g++
+          ./configure --prefix=${{ github.workspace }}/verilator/install CXX=clang++
           make -j4
           make install
           ccache -s
