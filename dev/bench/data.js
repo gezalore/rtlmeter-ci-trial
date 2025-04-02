@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1743590949044,
+  "lastUpdate": 1743591709454,
   "repoUrl": "https://github.com/gezalore/rtlmeter-ci-trial",
   "entries": {
     "Eval results": [
@@ -40753,6 +40753,88 @@ window.BENCHMARK_DATA = {
           {
             "name": "VeeR-EL2:default:cmark - execute - memory",
             "value": "12.596",
+            "unit": "MB"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Geza Lore",
+            "username": "gezalore",
+            "email": "gezalore@gmail.com"
+          },
+          "committer": {
+            "name": "Geza Lore",
+            "username": "gezalore",
+            "email": "gezalore@gmail.com"
+          },
+          "id": "69912b5696e956ecd2c874fbb9095ffdae75a300",
+          "message": "Use Clang",
+          "timestamp": "2025-03-28T20:06:40Z",
+          "url": "https://github.com/gezalore/rtlmeter-ci-trial/commit/69912b5696e956ecd2c874fbb9095ffdae75a300"
+        },
+        "date": 1743591708131,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "VeeR-EH1:default - verilate - elapsed",
+            "value": "3.45",
+            "unit": "s"
+          },
+          {
+            "name": "VeeR-EH1:default - verilate - memory",
+            "value": "173.592",
+            "unit": "MB"
+          },
+          {
+            "name": "VeeR-EH1:default:cmark - execute - elapsed",
+            "value": "75.18",
+            "unit": "s"
+          },
+          {
+            "name": "VeeR-EH1:default:cmark - execute - memory",
+            "value": "10.112",
+            "unit": "MB"
+          },
+          {
+            "name": "VeeR-EH2:default - verilate - elapsed",
+            "value": "10.27",
+            "unit": "s"
+          },
+          {
+            "name": "VeeR-EH2:default - verilate - memory",
+            "value": "406.14",
+            "unit": "MB"
+          },
+          {
+            "name": "VeeR-EH2:default:cmark - execute - elapsed",
+            "value": "67.46",
+            "unit": "s"
+          },
+          {
+            "name": "VeeR-EH2:default:cmark - execute - memory",
+            "value": "10.96",
+            "unit": "MB"
+          },
+          {
+            "name": "VeeR-EL2:default - verilate - elapsed",
+            "value": "5.2",
+            "unit": "s"
+          },
+          {
+            "name": "VeeR-EL2:default - verilate - memory",
+            "value": "249.3",
+            "unit": "MB"
+          },
+          {
+            "name": "VeeR-EL2:default:cmark - execute - elapsed",
+            "value": "71.72",
+            "unit": "s"
+          },
+          {
+            "name": "VeeR-EL2:default:cmark - execute - memory",
+            "value": "12.52",
             "unit": "MB"
           }
         ]
