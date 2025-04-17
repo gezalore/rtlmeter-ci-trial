@@ -5,8 +5,8 @@ name: Benchmark
 # Do not run this workflow on pull request since this workflow has permission to modify contents.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "10,25,40,55 * * * *"  # 10 and 40 minutes past every hour
+  #schedule:
+  #  - cron: "10,25,40,55 * * * *"  # 10 and 40 minutes past every hour
 
 permissions:
   # deployments permission to deploy GitHub pages website
